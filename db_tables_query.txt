@@ -1,0 +1,55 @@
+-- Database: healthcare_management
+
+-- Table structure for table admins
+CREATE TABLE admins (
+  admin_id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  PRIMARY KEY (admin_id)
+) ENGINE=InnoDB;
+
+-- Table structure for table users
+CREATE TABLE users (
+  user_id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  PRIMARY KEY (user_id)
+) ENGINE=InnoDB;
+
+-- Table structure for table doctors
+CREATE TABLE doctors (
+  doctor_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  specialization VARCHAR(100) NOT NULL,
+  phone VARCHAR(20),
+  email VARCHAR(100),
+  PRIMARY KEY (doctor_id)
+) ENGINE=InnoDB;
+
+-- Table structure for table patients
+CREATE TABLE patients (
+  patient_id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  age INT NOT NULL,
+  gender VARCHAR(10),
+  phone VARCHAR(20),
+  address TEXT,
+  PRIMARY KEY (patient_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+) ENGINE=InnoDB;
+
+-- Table structure for table appointments
+CREATE TABLE appointments (
+  appointment_id INT NOT NULL AUTO_INCREMENT,
+  patient_id INT NOT NULL,
+  doctor_id INT NOT NULL,
+  appointment_date DATE NOT NULL,
+  appointment_time TIME NOT NULL,
+  status VARCHAR(50) DEFAULT 'Pending',
+  PRIMARY KEY (appointment_id),
+  FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
+  FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
+) ENGINE=InnoDB;
